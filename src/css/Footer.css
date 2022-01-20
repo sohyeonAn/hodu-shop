@@ -1,0 +1,35 @@
+.footer {
+  width: 100%;
+  padding: 60px 12%;
+  background-color: var(--light-gray);
+}
+.footer__topContainer {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray);
+  padding-bottom: 22px;
+  font-size: 14px;
+}
+
+.footer__termContainer,
+.footer__snsContainer {
+  display: flex;
+  align-items: center;
+}
+
+.footer__termContainer > li:not(:last-of-type)::after {
+  content: "|";
+  margin: 0 14px;
+}
+
+.footer__snsContainer > li:not(:last-of-type) {
+  margin-right: 14px;
+}
+
+.footer__bottomContainer {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--dark-gray);
+}

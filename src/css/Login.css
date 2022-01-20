@@ -1,0 +1,89 @@
+.login {
+  margin: 0 auto;
+  width: 550px;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__logo {
+  max-width: 238px;
+}
+.login__logo img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.login__mainContainer {
+  width: 550px;
+  margin: 70px 0 30px;
+}
+
+.login__tabContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.login__tab {
+  flex: 1;
+  padding: 20px 0;
+  border-radius: 10px 10px 0 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--gray);
+  font-size: 18px;
+  background-color: var(--light-gray);
+}
+
+.login__tab.active {
+  background-color: #fff;
+  border-width: 1px 1px 0 1px;
+}
+
+.login__form {
+  width: 100%;
+  padding: 20px 35px 35px;
+  border-radius: 10px 10px 10px 10px;
+  border-width: 0 1px 1px 1px;
+  border-style: solid;
+  border-color: var(--gray);
+  background-color: #fff;
+}
+
+.login__form input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--gray);
+  padding: 20px 0;
+}
+
+.login__form input::placeholder {
+  color: var(--dark-gray);
+}
+
+.login__submitButton {
+  display: block;
+  margin-top: 36px;
+  padding: 20px;
+  width: 100%;
+  color: #fff;
+  background-color: var(--green);
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.login__findContainer a:not(:last-of-type)::after {
+  content: "|";
+  margin: 0 14px;
+}
+
+.login__message {
+  display: block;
+  margin: 26px 0;
+  float: left;
+  color: red;
+}
