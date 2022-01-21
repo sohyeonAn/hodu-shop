@@ -1,0 +1,81 @@
+.delivery .input-long {
+  width: 800px;
+}
+
+.delivery input {
+  width: 334px;
+}
+
+.delivery .input-short {
+  width: 100px;
+}
+
+.delivery {
+  width: 100%;
+  text-align: left;
+}
+.delivery h2 {
+  font-size: 24px;
+  font-weight: normal;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--gray);
+}
+
+.delivery h3 {
+  margin-top: 40px;
+  font-size: 18px;
+  font-weight: normal;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--gray);
+}
+
+.delivery__form fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery__form fieldset > div {
+  border-bottom: 1px solid var(--gray);
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+.delivery__form fieldset label {
+  width: 160px;
+}
+
+.delivery__form fieldset input {
+  height: 40px;
+  border: 1px solid var(--gray);
+}
+
+.delivery__form fieldset input[type="number"]:first-of-type {
+  width: 80px;
+}
+.delivery__form .phone {
+  display: flex;
+  flex-wrap: wrap;
+  width: 334px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delivery__form fieldset > div.address {
+  border: none;
+}
+.addressDetail > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.addressDetail > label {
+  visibility: hidden;
+}
+
+.delivery__searchPostBtn {
+  background-color: var(--green);
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 5px;
+  margin-left: 10px;
+}

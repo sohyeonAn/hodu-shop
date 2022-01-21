@@ -1,0 +1,76 @@
+.bill {
+  text-align: left;
+}
+
+.bill h2 {
+  font-size: 24px;
+  font-weight: normal;
+  padding-bottom: 18px;
+}
+
+.bill__container {
+  border: 2px solid var(--green);
+  border-radius: 10px;
+  width: 480px;
+}
+
+.bill__container ul {
+  width: 100%;
+  padding: 30px;
+}
+
+.bill__container li {
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.bill__container li::before {
+  content: "-";
+  margin-right: 5px;
+}
+
+.bill__container li > span:last-of-type {
+  font-size: 18px;
+  font-weight: bold;
+  float: right;
+}
+
+.bill__container li > span:last-of-type > small {
+  font-size: 16px;
+  font-weight: normal;
+  padding-left: 5px;
+}
+.bill__container li:last-of-type {
+  padding: 25px 0;
+  border-top: 1px solid var(--gray);
+}
+
+.bill__container li:last-of-type span:last-child {
+  font-size: 24px;
+  color: var(--red);
+}
+
+.bill__bottom {
+  padding: 30px;
+  background-color: var(--light-gray);
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.bill__bottom button {
+  background-color: var(--gray);
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 19px;
+  width: 220px;
+}
+
+.bill__bottom input[type="checkbox"] {
+  margin-right: 10px;
+}

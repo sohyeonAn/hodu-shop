@@ -9,6 +9,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Join from "./pages/Join";
 import { useStateValue } from "./StateProvider";
+import Cart from "./pages/Cart";
+import Order from "./pages/Order";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   const [{}, dispatch] = useStateValue();
@@ -35,6 +38,33 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
+          <Route
+            path="/product/:id"
+            element={
+              <>
+                <Header />
+                <ProductDetail />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/order"
+            element={
+              <>
+                <Header />
+                <Order />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/cart"
+            element={
+              <>
+                <Header />
+                <Cart />
+              </>
+            }
+          ></Route>
           <Route
             path="/login"
             element={

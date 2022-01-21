@@ -1,0 +1,19 @@
+.payment {
+  flex: 1;
+  text-align: left;
+}
+.payment h2 {
+  font-size: 24px;
+  font-weight: normal;
+  padding-bottom: 18px;
+}
+.payment__method {
+  padding: 10px;
+  border: solid var(--gray);
+  border-width: 1px 0 1px 0;
+  display: flex;
+  gap: 10px;
+}
+.payment__method input {
+  margin-right: 10px;
+}

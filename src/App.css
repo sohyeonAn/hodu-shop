@@ -6,6 +6,7 @@
   --light-gray: #f2f2f2;
   --green: #21bf48;
   --dark-gray: #767676;
+  --red: #eb5757;
 }
 
 * {
@@ -33,10 +34,14 @@ button {
   border: none;
 }
 
+fieldset {
+  border: none;
+}
+
 .bold {
   font-weight: 700;
 }
 
-fieldset {
-  border: none;
+.font-red {
+  color: var(--red);
 }
