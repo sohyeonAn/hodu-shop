@@ -1,0 +1,141 @@
+.product {
+  width: 100%;
+  padding: 80px 12%;
+}
+
+/* ProductInfo */
+.product__info {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+}
+
+.product__imageContainer {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+}
+.product__infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.product__imageContainer img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product__infoText span {
+  display: block;
+}
+.product__infoText span:nth-child(1) {
+  font-size: 18px;
+  color: var(--dark-gray);
+}
+.product__infoText span:nth-child(2) {
+  font-size: 36px;
+}
+.product__infoText span:nth-child(3) {
+  font-size: 36px;
+  font-weight: bold;
+}
+.product__infoText span:nth-child(3) > small {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.product__delivery {
+  display: block;
+  color: var(--dark-gray);
+  margin-bottom: 20px;
+}
+
+.product__amountContainer {
+  padding: 30px 0;
+  display: flex;
+  border-top: 2px solid var(--gray);
+  border-bottom: 2px solid var(--gray);
+}
+
+.product__amountContainer button,
+.product__amountContainer input {
+  border: 1px solid var(--gray);
+  width: 50px;
+  height: 50px;
+  text-align: center;
+}
+
+.product__amountContainer button:first-of-type {
+  border-radius: 5px 0 0 5px;
+}
+.product__amountContainer button:last-of-type {
+  border-radius: 0 5px 5px 0;
+}
+
+.product__priceContainer {
+  width: 100%;
+  padding: 32px 0 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product__priceContainer > span {
+  font-size: 18px;
+}
+
+.product__priceRight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product__priceRight span:first-of-type {
+  font-size: 18px;
+  color: var(--dark-gray);
+}
+
+.product__priceRight span:first-of-type > strong {
+  color: var(--green);
+}
+
+.product__priceRight span:last-of-type {
+  font-size: 36px;
+  color: var(--green);
+}
+
+.product__priceRight span:first-of-type::after {
+  content: "|";
+  margin: 0 10px;
+}
+
+.product__priceRight span:last-of-type > small {
+  font-size: 18px;
+}
+
+.product__buttonContainer {
+  width: 100%;
+}
+
+.product__buttonContainer button {
+  border-radius: 5px;
+  padding: 19px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.product__buttonContainer button:first-of-type {
+  float: left;
+  width: 60%;
+  background-color: var(--green);
+  margin-right: 14px;
+}
+.product__buttonContainer button:last-of-type {
+  float: right;
+  width: 35%;
+  background-color: var(--dark-gray);
+}

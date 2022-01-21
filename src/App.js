@@ -39,7 +39,7 @@ function App() {
       <div className="app">
         <Routes>
           <Route
-            path="/product/:id"
+            path="/product"
             element={
               <>
                 <Header />
