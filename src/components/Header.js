@@ -33,7 +33,7 @@ function Header() {
         </div>
       </div>
       <nav className="header__nav header__rightSide">
-        <Link to="/" className="header__option">
+        <Link to="/cart" className="header__option">
           <img
             src="images/icon-shopping-cart.svg"
             className="header__optionImage"
