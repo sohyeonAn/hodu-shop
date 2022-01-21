@@ -139,3 +139,23 @@
   width: 35%;
   background-color: var(--dark-gray);
 }
+
+/* product nav */
+.product__tabs {
+  margin-top: 140px;
+  width: 100%;
+  display: flex;
+}
+
+.product__tabs button {
+  flex: 1;
+  display: block;
+  padding: 18px;
+  font-size: 18px;
+  color: var(--gray);
+  border-bottom: 3px solid var(--gray);
+}
+.product__tabs button.active {
+  color: var(--green);
+  border-bottom: 3px solid var(--green);
+}

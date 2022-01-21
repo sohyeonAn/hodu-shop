@@ -1,9 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../css/ProductDetail.css";
 function ProductDetail() {
+  const [section, setSection] = useState(1);
+  const buttons = document.querySelectorAll(".product .product__tabs button");
+
+  useEffect(() => {
+    buttons.forEach((button, index) => {
+      if (index === section - 1) {
+        button.classList.add("active");
+      } else {
+        button.classList.remove("active");
+      }
+    });
+  }, [section]);
+  function getActiveSection() {
+    if (section === 1) {
+      return <div>11111</div>;
+    } else if (section === 2) {
+      return <div>22222</div>;
+    } else if (section === 3) {
+      return <div>33333</div>;
+    } else if (section === 4) {
+      return <div>44444</div>;
+    }
+  }
   return (
     <section className="product">
       <ProductInfo />
+      <nav class="product__tabs">
+        <button type="button" onClick={(e) => setSection(1)}>
+          버튼
+        </button>
+        <button type="button" onClick={(e) => setSection(2)}>
+          리뷰
+        </button>
+        <button type="button" onClick={(e) => setSection(3)}>
+          Q&A
+        </button>
+        <button type="button" onClick={(e) => setSection(4)}>
+          반품/교환정보
+        </button>
+      </nav>
+      {getActiveSection()}
     </section>
   );
 }
