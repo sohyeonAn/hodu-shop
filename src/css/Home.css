@@ -7,7 +7,7 @@
 .home__productContainer {
   width: 100%;
   padding: 80px 12%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 70px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }

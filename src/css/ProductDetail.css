@@ -14,7 +14,7 @@
 .product__imageContainer {
   position: relative;
   width: 100%;
-  padding-bottom: 100%;
+  padding-top: 100%;
 }
 .product__infoContainer {
   display: flex;
