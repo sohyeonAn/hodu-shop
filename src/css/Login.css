@@ -52,6 +52,7 @@
   border-style: solid;
   border-color: var(--gray);
   background-color: #fff;
+  z-index: 50;
 }
 
 .login__form input {

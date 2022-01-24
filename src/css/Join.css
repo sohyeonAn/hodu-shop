@@ -41,7 +41,7 @@
 }
 
 .join__form input:focus {
-  outline: 2px solid var(--green);
+  outline: 2px solid var(--red);
 }
 
 .join__form .join__inputContainer {
@@ -94,10 +94,27 @@
   width: calc(100% - 70px);
   padding: 14px 0;
   color: #fff;
-  background-color: var(--gray);
+  background-color: var(--green);
   border-radius: 10px;
   font-size: 18px;
 }
 .join__submitButton:disabled {
   background-color: var(--light-gray);
+}
+
+.checkMsg {
+  text-align: left;
+  color: var(--red);
+}
+.checkMsg.correct {
+  color: var(--green);
+}
+
+.join__pwdInputContainer {
+  position: relative;
+}
+.join__pwdValidImg {
+  position: absolute;
+  top: 50%;
+  transform: translate(-150%, -50%);
 }
