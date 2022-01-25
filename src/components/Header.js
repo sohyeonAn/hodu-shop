@@ -1,14 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useStateValue } from "../StateProvider";
 import { auth } from "../firebase";
 import "../css/Header.css";
 function Header() {
+  const navigate = useNavigate();
   const [{ user }, dispatch] = useStateValue();
 
   const handleAuth = () => {
     if (user) {
-      if (window.confirm("로그아웃 하시겠습니까?")) auth.signOut();
+      if (window.confirm("로그아웃 하시겠습니까?")) {
+        auth.signOut();
+        navigate("/");
+      }
     }
   };
 

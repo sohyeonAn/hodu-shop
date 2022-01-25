@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_ENDPOINT } from "../constants";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import "../css/Login.css";
+import axios from "axios";
 
 function Login() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(null);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -17,11 +19,23 @@ function Login() {
     } else if (password.length === 0) {
       setMessage("비밀번호를 입력해주세요.");
     } else {
-      setMessage("");
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => navigate("/"))
+      axios({
+        url: `${API_ENDPOINT}/accounts/login/`,
+        method: "post",
+        data: {
+          username: email,
+          password: password,
+          login_type: "BUYER",
+        },
+      })
+        .then((response) => {
+          const token = response.data.token;
+          // TODO: 응답 받은 토큰 저장하기
+          setMessage("correct!");
+          navigate("/");
+        })
         .catch((error) => {
+          console.log(error.response.data["FAIL_Message"]);
           setMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
         });
     }
@@ -55,7 +69,7 @@ function Login() {
             placeholder="비밀번호"
             onChange={(e) => setPassword(e.target.value)}
           />
-          {message !== "" && <span className="login__message">{message}</span>}
+          {message && <span className="login__message">{message}</span>}
           <button
             type="submit"
             className="login__submitButton"

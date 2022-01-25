@@ -27,7 +27,7 @@ function ProductDetail() {
   return (
     <section className="product">
       <ProductInfo />
-      <nav class="product__tabs">
+      <nav className="product__tabs">
         <button type="button" onClick={(e) => setSection(1)}>
           버튼
         </button>
@@ -64,7 +64,7 @@ function ProductInfo() {
         </div>
         <div className="product__infoBottom">
           <span className="product__delivery">택배배송 / 무료배송</span>
-          <div class="product__amountContainer">
+          <div className="product__amountContainer">
             <button type="button">
               <img src="images/icon-minus-line.svg" />
             </button>
@@ -75,7 +75,7 @@ function ProductInfo() {
           </div>
           <div className="product__priceContainer">
             <span>총 상품 금액</span>
-            <div class="product__priceRight">
+            <div className="product__priceRight">
               <span>
                 총 수량 <strong>1</strong>개
               </span>

@@ -118,3 +118,55 @@
   top: 50%;
   transform: translate(-150%, -50%);
 }
+
+/* 커스텀 셀렉트 박스 */
+.cont-select {
+  position: relative;
+  width: 100%;
+}
+
+.btn-select {
+  width: 100%;
+  padding: 17px;
+  border: 1px solid var(--gray);
+  box-sizing: border-box;
+  border-radius: 10px;
+  cursor: pointer;
+  background: url("../../public/images/icon-down-arrow.svg") center right 13px
+    no-repeat;
+
+  /* 말줄임 */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.btn-select.on {
+  background: url("../../public/images/icon-up-arrow.svg") center right 13px
+    no-repeat;
+}
+
+.list-member {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 150px;
+  top: 60px;
+  border: 1px solid var(--gray);
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #fff;
+  overflow-y: scroll;
+}
+
+.btn-select.on + .list-member {
+  display: block;
+}
+
+.list-member li button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #fff;
+  border-radius: 10px;
+}
