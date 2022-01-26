@@ -28,6 +28,12 @@ a {
   cursor: pointer;
   text-decoration: none;
 }
+a:link {
+  color: #000000;
+}
+a:visited {
+  color: #000;
+}
 
 button {
   background-color: transparent;
