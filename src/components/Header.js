@@ -21,7 +21,7 @@ function Header() {
       <div className="header__leftSide">
         <Link to="/">
           <img
-            src="images/Logo-hodu.png"
+            src="/images/Logo-hodu.png"
             alt="호두 로고이미지"
             className="header__logo"
           />
@@ -33,13 +33,13 @@ function Header() {
             className="header__searchInput"
             placeholder="상품을 검색해보세요!"
           />
-          <img src="images/icon-search.png" className="header__searchIcon" />
+          <img src="/images/icon-search.png" className="header__searchIcon" />
         </div>
       </div>
       <nav className="header__nav header__rightSide">
         <Link to="/cart" className="header__option">
           <img
-            src="images/icon-shopping-cart.svg"
+            src="/images/icon-shopping-cart.svg"
             className="header__optionImage"
           />
           <span className="header__optionTitle">장바구니</span>
@@ -49,7 +49,7 @@ function Header() {
           onClick={handleAuth}
           className="header__option"
         >
-          <img src="images/icon-user.svg" className="header__optionImage" />
+          <img src="/images/icon-user.svg" className="header__optionImage" />
           <span className="header__optionTitle">
             {user ? "로그아웃" : "로그인"}
           </span>

@@ -76,11 +76,6 @@ export default ProductDetail;
 function ProductInfo(props) {
   const [amount, setAmount] = useState(1);
 
-  const handlePlusBtnClick = () => {
-    amount ? setAmount(amount + 1) : setAmount(1);
-  };
-
-  const handleMinusBtnClick = () => {};
   return (
     <div className="product__info">
       <div className="product__imageContainer">
@@ -113,7 +108,7 @@ function ProductInfo(props) {
                 }
               }}
             >
-              <img src="images/icon-minus-line.svg" />
+              <img src="/images/icon-minus-line.svg" />
             </button>
             <input
               type="number"
@@ -127,9 +122,10 @@ function ProductInfo(props) {
             />
             <button
               type="button"
+              className="plusBtn"
               onClick={() => (amount ? setAmount(amount + 1) : setAmount(1))}
             >
-              <img src="images/icon-plus-line.svg" />
+              <img src="/images/icon-plus-line.svg" />
             </button>
           </div>
           <div className="product__priceContainer">
