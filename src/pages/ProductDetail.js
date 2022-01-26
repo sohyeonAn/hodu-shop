@@ -27,9 +27,11 @@ function ProductDetail() {
   }, []);
 
   useEffect(() => {
-    const buttons = document.querySelectorAll(".product .product__tabs button");
+    const $sectionBtns = document.querySelectorAll(
+      ".product .product__tabs button"
+    );
 
-    buttons.forEach((button, index) => {
+    $sectionBtns.forEach((button, index) => {
       if (index === section - 1) {
         button.classList.add("active");
       } else {
@@ -76,6 +78,15 @@ export default ProductDetail;
 function ProductInfo(props) {
   const [amount, setAmount] = useState(1);
 
+  useEffect(() => {
+    const $plusBtn = document.querySelector(".product__info .plusBtn");
+    if (amount >= props.productInfo.stock) {
+      $plusBtn.disabled = true;
+      alert(`재고가 ${props.productInfo.stock}개 남았습니다.`);
+    } else {
+      $plusBtn.disabled = false;
+    }
+  }, [amount]);
   return (
     <div className="product__info">
       <div className="product__imageContainer">
@@ -108,7 +119,7 @@ function ProductInfo(props) {
                 }
               }}
             >
-              <img src="/images/icon-minus-line.svg" />
+              <img src="/images/icon-minus-line.svg" alt="뺴기" />
             </button>
             <input
               type="number"
@@ -125,7 +136,7 @@ function ProductInfo(props) {
               className="plusBtn"
               onClick={() => (amount ? setAmount(amount + 1) : setAmount(1))}
             >
-              <img src="/images/icon-plus-line.svg" />
+              <img src="/images/icon-plus-line.svg" alt="더하기" />
             </button>
           </div>
           <div className="product__priceContainer">
@@ -135,7 +146,7 @@ function ProductInfo(props) {
                 총 수량 <strong>{isNaN(amount) ? 0 : `${amount}`}</strong>개
               </span>
               <span>
-                {props.productInfo.price}
+                {isNaN(amount) ? 0 : `${amount * props.productInfo.price}`}
                 <small>원</small>
               </span>
             </div>
