@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Product from "../components/Product";
 import { API_ENDPOINT } from "../constants";
 import axios from "axios";
@@ -26,7 +27,17 @@ function Home() {
 
       <section className="home__productContainer">
         {products.map((product) => {
-          return <Product key={product.product_id} product={product} />;
+          return (
+            <Link
+              key={`goto_${product.product_id}`}
+              to={`/product/${product.product_id}`}
+            >
+              <Product
+                key={`product_${product.product_id}`}
+                product={product}
+              />
+            </Link>
+          );
         })}
       </section>
     </div>

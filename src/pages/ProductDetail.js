@@ -1,10 +1,34 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { API_ENDPOINT } from "../constants";
+import axios from "axios";
+
 import "../css/ProductDetail.css";
 function ProductDetail() {
-  const [section, setSection] = useState(1);
-  const buttons = document.querySelectorAll(".product .product__tabs button");
+  const [section, setSection] = useState(null);
+  const [productInfo, setProductInfo] = useState({});
+
+  const { productId } = useParams();
+  useEffect(() => {
+    axios({
+      url: `${API_ENDPOINT}/products/${productId}`,
+      method: "get",
+    })
+      .then((res) => {
+        console.log(res.data);
+        setProductInfo(res.data);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+
+    setSection(1);
+    console.log(productInfo);
+  }, []);
 
   useEffect(() => {
+    const buttons = document.querySelectorAll(".product .product__tabs button");
+
     buttons.forEach((button, index) => {
       if (index === section - 1) {
         button.classList.add("active");
@@ -13,6 +37,7 @@ function ProductDetail() {
       }
     });
   }, [section]);
+
   function getActiveSection() {
     if (section === 1) {
       return <div>11111</div>;
@@ -26,7 +51,7 @@ function ProductDetail() {
   }
   return (
     <section className="product">
-      <ProductInfo />
+      <ProductInfo productInfo={productInfo} />
       <nav className="product__tabs">
         <button type="button" onClick={(e) => setSection(1)}>
           버튼
@@ -48,28 +73,62 @@ function ProductDetail() {
 
 export default ProductDetail;
 
-function ProductInfo() {
+function ProductInfo(props) {
+  const [amount, setAmount] = useState(1);
+
+  const handlePlusBtnClick = () => {
+    amount ? setAmount(amount + 1) : setAmount(1);
+  };
+
+  const handleMinusBtnClick = () => {};
   return (
     <div className="product__info">
       <div className="product__imageContainer">
-        <img src="images/product1.png" />
+        <img src={props.productInfo.image} />
       </div>
       <div className="product__infoContainer">
         <div className="product__infoText">
-          <span>백엔드글로벌</span>
-          <span>딥러닝 개발자 무릎 담요</span>
+          <span>{props.productInfo.seller_store}</span>
+          <span>{props.productInfo.product_name}</span>
           <span>
-            17,500<small>원</small>
+            {props.productInfo.price}
+            <small>원</small>
           </span>
         </div>
         <div className="product__infoBottom">
-          <span className="product__delivery">택배배송 / 무료배송</span>
+          <span className="product__delivery">
+            택배배송 /{" "}
+            {props.productInfo.shipping_fee === 0
+              ? "무료배송"
+              : `${props.productInfo.shipping_fee}원`}
+          </span>
           <div className="product__amountContainer">
-            <button type="button">
+            <button
+              type="button"
+              onClick={() => {
+                if (amount > 1) {
+                  setAmount(amount - 1);
+                } else if (!amount) {
+                  setAmount(1);
+                }
+              }}
+            >
               <img src="images/icon-minus-line.svg" />
             </button>
-            <input type="number" defaultValue={1} />
-            <button type="button">
+            <input
+              type="number"
+              min="1"
+              value={isNaN(amount) ? "" : `${amount}`}
+              onChange={(e) =>
+                e.target.value === "0"
+                  ? alert("수량은 1개 이상부터 입력 가능합니다.")
+                  : setAmount(parseInt(e.target.value))
+              }
+            />
+            <button
+              type="button"
+              onClick={() => (amount ? setAmount(amount + 1) : setAmount(1))}
+            >
               <img src="images/icon-plus-line.svg" />
             </button>
           </div>
@@ -77,10 +136,11 @@ function ProductInfo() {
             <span>총 상품 금액</span>
             <div className="product__priceRight">
               <span>
-                총 수량 <strong>1</strong>개
+                총 수량 <strong>{isNaN(amount) ? 0 : `${amount}`}</strong>개
               </span>
               <span>
-                17,500<small>원</small>
+                {props.productInfo.price}
+                <small>원</small>
               </span>
             </div>
           </div>
