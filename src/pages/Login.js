@@ -1,42 +1,52 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useStateValue } from "../StateProvider";
 import { API_ENDPOINT } from "../constants";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+
 import "../css/Login.css";
 import axios from "axios";
 
 function Login() {
+  const [{}, dispatch] = useStateValue();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
 
   const signIn = (e) => {
     e.preventDefault();
-    if (email.length === 0) {
-      setMessage("이메일을 입력해주세요.");
+    const $idInput = document.querySelector(".login__form #id");
+    const $pwdInput = document.querySelector(".login__form #password");
+
+    if (id.length === 0) {
+      $idInput.focus();
+      setMessage("아이디를 입력해주세요.");
     } else if (password.length === 0) {
+      $pwdInput.focus();
       setMessage("비밀번호를 입력해주세요.");
     } else {
       axios({
         url: `${API_ENDPOINT}/accounts/login/`,
         method: "post",
         data: {
-          username: email,
+          username: id,
           password: password,
           login_type: "BUYER",
         },
       })
         .then((response) => {
-          const token = response.data.token;
-          // TODO: 응답 받은 토큰 저장하기
-          setMessage("correct!");
-          navigate("/");
+          const loginUser = response.data;
+          dispatch({
+            type: "SET_USER",
+            user: loginUser,
+          });
+          navigate(-1);
         })
         .catch((error) => {
           console.log(error.response.data["FAIL_Message"]);
           setMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
+          $pwdInput.focus();
+          $pwdInput.value = "";
         });
     }
   };
@@ -58,14 +68,14 @@ function Login() {
 
         <form className="login__form">
           <input
+            id="id"
             type="text"
-            value={email}
-            placeholder="이메일"
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="아이디"
+            onChange={(e) => setId(e.target.value)}
           />
           <input
+            id="password"
             type="password"
-            value={password}
             placeholder="비밀번호"
             onChange={(e) => setPassword(e.target.value)}
           />

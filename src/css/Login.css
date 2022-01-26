@@ -62,6 +62,9 @@
   padding: 20px 0;
 }
 
+.login__form input:focus {
+  border-bottom: 2px solid var(--green);
+}
 .login__form input::placeholder {
   color: var(--dark-gray);
 }
