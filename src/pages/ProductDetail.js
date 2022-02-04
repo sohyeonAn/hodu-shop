@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { API_ENDPOINT } from "../constants";
+import { useStateValue } from "../StateProvider";
+
 import axios from "axios";
 
 import "../css/ProductDetail.css";
 function ProductDetail() {
+  const { productId } = useParams();
   const [section, setSection] = useState(null);
   const [productInfo, setProductInfo] = useState({});
 
-  const { productId } = useParams();
   useEffect(() => {
     axios({
-      url: `${API_ENDPOINT}/products/${productId}`,
+      url: `${API_ENDPOINT}/products/${productId}/`,
       method: "get",
     })
       .then((res) => {
@@ -23,7 +26,6 @@ function ProductDetail() {
       });
 
     setSection(1);
-    console.log(productInfo);
   }, []);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ function ProductDetail() {
     });
   }, [section]);
 
-  function getActiveSection() {
+  const getActiveSection = () => {
     if (section === 1) {
       return <div>11111</div>;
     } else if (section === 2) {
@@ -50,7 +52,7 @@ function ProductDetail() {
     } else if (section === 4) {
       return <div>44444</div>;
     }
-  }
+  };
   return (
     <section className="product">
       <ProductInfo productInfo={productInfo} />
@@ -76,7 +78,10 @@ function ProductDetail() {
 export default ProductDetail;
 
 function ProductInfo(props) {
+  const navigate = useNavigate();
+
   const [amount, setAmount] = useState(1);
+  const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
     const $plusBtn = document.querySelector(".product__info .plusBtn");
@@ -87,6 +92,27 @@ function ProductInfo(props) {
       $plusBtn.disabled = false;
     }
   }, [amount]);
+
+  const addToBasket = () => {
+    axios({
+      url: `${API_ENDPOINT}/cart/`,
+      headers: {
+        Authorization: `JWT ${user.token}`,
+      },
+      method: "post",
+      data: {
+        product_id: props.productInfo.product_id,
+        quantity: amount,
+        check: true,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/cart");
+      })
+      .catch((error) => console.log(error.response.data));
+  };
+
   return (
     <div className="product__info">
       <div className="product__imageContainer">
@@ -153,7 +179,9 @@ function ProductInfo(props) {
           </div>
           <div className="product__buttonContainer">
             <button type="button">바로 구매</button>
-            <button type="button">장바구니</button>
+            <button type="button" onClick={addToBasket}>
+              장바구니
+            </button>
           </div>
         </div>
       </div>
