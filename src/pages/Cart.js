@@ -1,9 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import { API_ENDPOINT } from "../constants";
+
+import { useStateValue } from "../StateProvider";
+import axios from "axios";
 import "../css/Cart.css";
 
 function Cart() {
-  const [basket, setBasket] = useState(null);
-  // const [basket, setBasket] = useState({});
+  const [{ user }] = useStateValue();
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    axios({
+      url: `${API_ENDPOINT}/cart/`,
+      headers: {
+        Authorization: `JWT ${user.token}`,
+      },
+      method: "get",
+    })
+      .then((res) => {
+        setCart(res.data.results);
+      })
+      .catch((error) => console.log(error.response.data));
+  }, []);
 
   return (
     <div className="cart">
@@ -19,55 +37,18 @@ function Cart() {
         <span>상품금액</span>
       </div>
 
-      {basket ? <CartList /> : <CartEmpty />}
-    </div>
-  );
-}
-
-export default Cart;
-
-function CartEmpty() {
-  return (
-    <div className="cart__emptyContainer">
-      <p className="bold">장바구니에 담긴 상품이 없습니다.</p>
-      <p>원하는 상품을 장바구니에 담아보세요!</p>
-    </div>
-  );
-}
-function CartList() {
-  return (
-    <>
-      <ul className="cart__list">
-        <li className="cart__itemContainer">
-          <div className="cart__itemCheckContainer">
-            <input type="checkbox" id="item" className="cart__itemCheck" />
-            <label className="cart__itemCheckLabel" />
-          </div>
-          <div className="cart__itemImageContainer">
-            <img src="images/product1.png" className="cart__itemImage" />
-          </div>
-          <div className="cart__itemInfo">
-            <span className="cart__companyName">백엔드글로벌</span>
-            <span className="cart__productName">딥러닝 개발자 무릎 담요</span>
-            <span className="cart__price bold">17,000 원</span>
-            <span className="cart__delivery">택배배송/무료배송</span>
-          </div>
-          <div className="cart__itemCountContainer">
-            <button type="button">
-              <img src="images/icon-minus-line.svg" />
-            </button>
-            <input type="number" defaultValue={1} className="cart__itemCount" />
-            <button type="button">
-              <img src="images/icon-plus-line.svg" />
-            </button>
-          </div>
-          <div className="cart__itemPrice">
-            <span className="font-red">17,000원</span>
-            <button type="button">주문하기</button>
-          </div>
-        </li>
-      </ul>
-
+      {cart.length > 0 ? (
+        cart.map((item) => (
+          <CartList
+            key={`cartItem_${item.cart_item_id}`}
+            productId={item.product_id}
+            quantity={item.quantity}
+            cartItemId={item.cart_item_id}
+          />
+        ))
+      ) : (
+        <CartEmpty />
+      )}
       <div className="cart__tableBottom">
         <div className="cart__textGroup">
           <span>총 상품금액</span>
@@ -96,10 +77,142 @@ function CartList() {
           </span>
         </div>
       </div>
-
-      <button type="button" className="cart__orderButton">
-        주문하기
-      </button>
-    </>
+      <Link to={user ? "/order" : "/login"}>
+        <button type="button" className="cart__orderButton">
+          주문하기
+        </button>
+      </Link>
+    </div>
   );
+
+  function CartEmpty() {
+    return (
+      <div className="cart__emptyContainer">
+        <p className="bold">장바구니에 담긴 상품이 없습니다.</p>
+        <p>원하는 상품을 장바구니에 담아보세요!</p>
+      </div>
+    );
+  }
+
+  function CartList({ productId, quantity, cartItemId }) {
+    const [product, setProduct] = useState({});
+    const [amount, setAmount] = useState(quantity);
+    const [inputValue, setInputValue] = useState(quantity);
+    const $amountInput = useRef();
+    useEffect(() => {
+      axios({
+        url: `${API_ENDPOINT}/products/${productId}/`,
+        method: "get",
+      })
+        .then((res) => {
+          setProduct(res.data);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    }, []);
+
+    useEffect(() => {
+      // // PUT /cart/<int:cart_item_id>/
+      // axios({
+      //   url: `${API_ENDPOINT}/cart/${cartItemId}/`,
+      //   headers: {
+      //     Authorization: `JWT ${user.token}`,
+      //   },
+      //   method: "put",
+      //   data: {
+      //     product_id: productId,
+      //     quantity: amount,
+      //     is_active: true,
+      //   },
+      // })
+      //   .then((res) => {
+      //     console.log("수량변경", res.data);
+      //     setAmount(res.data.quantity);
+      //   })
+      //   .catch((error) => console.log(error.response.data));
+    }, [amount]);
+
+    const quantityValidation = (inputAmount) => {
+      const tmpAmount = parseInt(inputAmount);
+      if (amount !== tmpAmount) {
+        if (tmpAmount <= product.stock) {
+          if (tmpAmount >= 1) {
+            setAmount(tmpAmount);
+            setInputValue(tmpAmount);
+          } else {
+            alert("1개 이상의 수량만 입력할 수 있습니다.");
+            setInputValue(1);
+          }
+        } else {
+          alert(`주문 수량이 재고 수량을 초과했습니다. 재고:${product.stock}`);
+          setInputValue(product.stock);
+        }
+      }
+    };
+
+    return (
+      <>
+        <ul className="cart__list">
+          <li className="cart__itemContainer">
+            <div className="cart__itemCheckContainer">
+              <input type="checkbox" id="item" className="cart__itemCheck" />
+              <label className="cart__itemCheckLabel" />
+            </div>
+            <div className="cart__itemImageContainer">
+              <img src={product.image} className="cart__itemImage" />
+            </div>
+            <div className="cart__itemInfo">
+              <span className="cart__companyName">{product.seller_store}</span>
+              <span className="cart__productName">{product.product_name}</span>
+              <span className="cart__price bold">{product.price} 원</span>
+              <span className="cart__delivery">
+                택배배송 /{" "}
+                {product.shipping_fee === 0
+                  ? "무료배송"
+                  : `${product.shipping_fee}원`}
+              </span>
+            </div>
+            <div className="cart__itemCountContainer">
+              <button
+                type="button"
+                onClick={() => {
+                  quantityValidation(inputValue - 1);
+                }}
+              >
+                <img src="images/icon-minus-line.svg" />
+              </button>
+              <input
+                type="number"
+                className="cart__itemCount"
+                ref={$amountInput}
+                value={inputValue}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                }}
+                onBlur={(e) => {
+                  quantityValidation(e.target.value);
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  quantityValidation(inputValue + 1);
+                }}
+              >
+                <img src="images/icon-plus-line.svg" />
+              </button>
+            </div>
+            <div className="cart__itemPrice">
+              <span className="font-red">{quantity * product.price}원</span>
+              <button type="button">주문하기</button>
+            </div>
+          </li>
+        </ul>
+      </>
+    );
+  }
 }
+
+export default Cart;
