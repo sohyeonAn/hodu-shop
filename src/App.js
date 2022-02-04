@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
@@ -6,7 +5,6 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Join from "./pages/Join";
-import { useStateValue } from "./StateProvider";
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 import ProductDetail from "./pages/ProductDetail";
